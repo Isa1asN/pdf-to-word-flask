@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <form method="POST" enctype="multipart/form-data">
+        <div class="container">
+            <div class="box" id="drop_zone">
+                <label for="inputf" class="file_input">Choose PDF File</label>
+                <input type="file" id="inputf" name="pdf_file" accept=".pdf" onchange="updateFileName()">
+                <p id="convertp">Click to select the pdf file to convert</p>
+            </div>
+            <button id="convert_btn">Convert to Word</button>
+            <br>
+            <h3 id="status"></h3>
+            <br>
+            <p><small>The file will be convereted in the backround and downloaded automatically as soon as you hit convert button</small></p>
+            <p><small><b>N.B. larger files take more time</b></small></p>
+        </div>
+    </form>
+    
+
+    <script>
+        const convertBtn = document.getElementById('convert_btn');
+        
+            const fileInput = document.getElementById('inputf');
+            const fileLabel = document.querySelector('.file_input');
+            const convertText = document.getElementById('convertp');
+
+        function updateFileName() {
+            if (fileInput.files.length > 0) {
+                fileLabel.textContent = fileInput.files[0].name;
+                convertText.textContent = 'Press the convert button to begin convertion'
+
+            } else {
+                fileLabel.textContent = 'Choose PDF File';
+            }
+        }
+        const status = document.getElementById('status');
+
+        convertBtn.addEventListener('click', () => {
+            console.log('Conversion in progress...');
+            status.textContent = "Conversion process running... will download when finished"
+            setTimeout(() => {
+                status.textContent = ""; 
+            }, 5000); 
+        });
+
+
+    </script>
+</body>
+</html>
